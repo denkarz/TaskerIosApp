@@ -13,39 +13,40 @@ import SwiftyJSON
 class ProjectsListScreen: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     var projects:[Project] = []
-    var projects1:[Project] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("hello")
         self.navigationController!.navigationBar.tintColor = UIColor.white
         self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "OpenSans", size: 20)!,NSAttributedString.Key.foregroundColor:UIColor.white]
-//        ["OpenSans-Semibold", "OpenSans"]
-//        for family in UIFont.familyNames.sorted(){
-//            let names = UIFont.fontNames(forFamilyName:family)
-//            print("Family: \(family) Font names: \(names)")
-//        }
         self.tableView.backgroundColor = UIColor(red:0.97, green:0.97, blue:0.97, alpha:1.0)
         projects = createArray()
-        test()
-        print("bye")
+        fetch_data()
     }
     
-    func test() -> Void {
+    func fetch_data() -> Void {
+        var tempProjects:[Project]=[]
         Alamofire.request("http://192.168.1.68:3000/custom_controller/index.json").responseJSON { (responseData) -> Void in
-            var tempProjects:[Project]=[]
             if((responseData.result.value) != nil) {
                 let json = JSON(responseData.result.value!)
-                var tmpProject = Project()
-                for i in 0 ..< json[0].count {
-                    tmpProject.id = json[0][i]["id"].intValue
-                    tmpProject.title = json[i][i]["title"].stringValue
+                for i in 0 ..< json.count {
+                    let tmpProject = Project()
+                    tmpProject.id = json[i]["id"].intValue
+                    tmpProject.title = json[i]["title"].stringValue
+                    
+                    let jtodos = json[i]["todos"]
+                    for j in 0 ..< jtodos.count {
+                        let tmpTodo = Todo()
+                        tmpTodo.id = jtodos[j]["id"].intValue
+                        tmpTodo.text = jtodos[j]["text"].stringValue
+                        tmpTodo.is_completed = jtodos["is_completed"].boolValue
+                        tmpProject.todos.append(tmpTodo)
+                    }
+                    tempProjects.append(tmpProject)
                 }
-                tempProjects.append(tmpProject)
-                 print(tempProjects.count)
             }
         }
-       
-//        return tempProjects
+        projects = tempProjects
+        tableView.reloadData()
     }
     
     func createArray() -> [Project] {
@@ -119,4 +120,5 @@ extension ProjectsListScreen: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 44
     }
+    
 }
