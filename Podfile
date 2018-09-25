@@ -7,6 +7,7 @@ target 'TaskerIosApp' do
 
   # Pods for TaskerIosApp
   pod 'Alamofire', '~> 4.7'
+  pod 'AlamofireObjectMapper', '~> 5.0'
   pod 'SwiftyJSON', '~> 4.0'
   pod 'M13Checkbox'
 end

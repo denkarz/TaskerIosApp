@@ -7,14 +7,16 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class ProjectsListScreen: UIViewController {
     @IBOutlet weak var tableView: UITableView!
-    
     var projects:[Project] = []
-    
+    var projects1:[Project] = []
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("hello")
         self.navigationController!.navigationBar.tintColor = UIColor.white
         self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "OpenSans", size: 20)!,NSAttributedString.Key.foregroundColor:UIColor.white]
 //        ["OpenSans-Semibold", "OpenSans"]
@@ -24,7 +26,28 @@ class ProjectsListScreen: UIViewController {
 //        }
         self.tableView.backgroundColor = UIColor(red:0.97, green:0.97, blue:0.97, alpha:1.0)
         projects = createArray()
+        test()
+        print("bye")
     }
+    
+    func test() -> Void {
+        Alamofire.request("http://192.168.1.68:3000/custom_controller/index.json").responseJSON { (responseData) -> Void in
+            var tempProjects:[Project]=[]
+            if((responseData.result.value) != nil) {
+                let json = JSON(responseData.result.value!)
+                var tmpProject = Project()
+                for i in 0 ..< json[0].count {
+                    tmpProject.id = json[0][i]["id"].intValue
+                    tmpProject.title = json[i][i]["title"].stringValue
+                }
+                tempProjects.append(tmpProject)
+                 print(tempProjects.count)
+            }
+        }
+       
+//        return tempProjects
+    }
+    
     func createArray() -> [Project] {
         var tempProjects:[Project]=[]
         var tempTodos1:[Todo]=[]

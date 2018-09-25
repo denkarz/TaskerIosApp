@@ -1,24 +1,33 @@
 PODS:
   - Alamofire (4.7.3)
+  - AlamofireObjectMapper (5.1.0):
+    - Alamofire (~> 4.1)
+    - ObjectMapper (~> 3.3)
   - M13Checkbox (3.2.2)
+  - ObjectMapper (3.3.0)
   - SwiftyJSON (4.1.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.7)
+  - AlamofireObjectMapper (~> 5.0)
   - M13Checkbox
   - SwiftyJSON (~> 4.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - AlamofireObjectMapper
     - M13Checkbox
+    - ObjectMapper
     - SwiftyJSON
 
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
+  AlamofireObjectMapper: 3395e698901d8b0e6f48b7d0c43bd47875325102
   M13Checkbox: a8c2491cfbbca10797925fd0b9154a782bf40d89
+  ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
 
-PODFILE CHECKSUM: 4ece74b8d3d4b59ab37e8c909ef49ec77c55e41b
+PODFILE CHECKSUM: 3162d2a32bacb31ab210a49a4d721233182e1f70
 
 COCOAPODS: 1.5.3
