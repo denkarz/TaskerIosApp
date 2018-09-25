@@ -12,18 +12,25 @@ import SwiftyJSON
 
 class ProjectsListScreen: UIViewController {
     @IBOutlet weak var tableView: UITableView!
+    
     var projects:[Project] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController!.navigationBar.tintColor = UIColor.white
         self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "OpenSans", size: 20)!,NSAttributedString.Key.foregroundColor:UIColor.white]
+//        ["OpenSans-Semibold", "OpenSans"]
+//        for family in UIFont.familyNames.sorted(){
+//            let names = UIFont.fontNames(forFamilyName:family)
+//            print("Family: \(family) Font names: \(names)")
+//        }
         self.tableView.backgroundColor = UIColor(red:0.97, green:0.97, blue:0.97, alpha:1.0)
         projects = createArray()
-        fetch_data()
+//        fetch_data()
     }
     
     func fetch_data() -> Void {
+        print("fetch")
         var tempProjects:[Project]=[]
         Alamofire.request("http://192.168.1.68:3000/custom_controller/index.json").responseJSON { (responseData) -> Void in
             if((responseData.result.value) != nil) {
@@ -32,7 +39,7 @@ class ProjectsListScreen: UIViewController {
                     let tmpProject = Project()
                     tmpProject.id = json[i]["id"].intValue
                     tmpProject.title = json[i]["title"].stringValue
-                    
+    
                     let jtodos = json[i]["todos"]
                     for j in 0 ..< jtodos.count {
                         let tmpTodo = Todo()
@@ -120,5 +127,4 @@ extension ProjectsListScreen: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 44
     }
-    
 }
