@@ -26,8 +26,11 @@ class AddTodoListScreen: UIViewController {
     }
     
     @IBAction func done(_ sender: Any) {
+        let text = "Hell"
+        let projectId = "1"
+        var url = "https://limitless-dawn-57124.herokuapp.com/custom_controller/create?project_id=\(projectId)&text=\(text)"
+        print(url)
         self.dismiss(animated: true, completion: nil)
-
     }
 }
 

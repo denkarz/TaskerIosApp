@@ -11,28 +11,40 @@ import UIKit
 import M13Checkbox
 
 class TodoCell: UITableViewCell {
-    var todoText: String?
-    var label = UILabel()
+    var todo: Todo?
+    var label = UITextView()
+    var checkbox = M13Checkbox(frame: CGRect(x: 10, y: 0.0, width: 30.0, height: 30.0))
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        let checkbox = M13Checkbox(frame: CGRect(x: 10, y: 0.0, width: 30.0, height: 30.0))
+        self.addSubview(checkbox)
+        self.addSubview(label)
         checkbox.boxType = .square
         checkbox.stateChangeAnimation = .fill
         checkbox.tintColor = UIColor(red:0.23, green:0.69, blue:0.85, alpha:1.0)
-        label.frame = CGRect (x: 50, y: 0, width: 100, height: 35)
+        label.frame = CGRect (x: 50, y: 0, width: 300, height: 35)
         label.font = UIFont(name: "OpenSans", size: 15)
-        self.addSubview(checkbox)
-        self.addSubview(label)
+        label.isScrollEnabled = false
+        checkbox.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
+        checkbox.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        checkbox.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        checkbox.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
+        
+        label.leftAnchor.constraint(equalTo: checkbox.rightAnchor).isActive = true
+        label.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        label.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        label.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
     }
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-//        self.selectionStyle = .none
     }
     override func layoutSubviews() {
         super.layoutSubviews()
-        if let todoText = todoText {
-            label.text = todoText
+        label.text = todo!.text
+        if (todo?.is_completed == true) {
+            checkbox.setCheckState(.checked, animated: true)
+        } else {
+            checkbox.setCheckState(.unchecked, animated: true)
         }
     }
 }
