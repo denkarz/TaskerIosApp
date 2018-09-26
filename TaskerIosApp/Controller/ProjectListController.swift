@@ -17,18 +17,19 @@ class ProjectsListScreen: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetch_data()
         self.navigationController!.navigationBar.tintColor = UIColor.white
         self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "OpenSans", size: 20)!,NSAttributedString.Key.foregroundColor:UIColor.white]
         self.tableView.backgroundColor = UIColor(red:0.97, green:0.97, blue:0.97, alpha:1.0)
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 200
     }
+    
     override func viewWillAppear(_ animated: Bool){
         fetch_data()
     }
     
     public func fetch_data() -> Void {
-        print("fetching_start")
         var tempProjects:[Project]=[]
         Alamofire.request("https://limitless-dawn-57124.herokuapp.com/custom_controller/index.json").responseJSON { (responseData) -> Void in
             if((responseData.result.value) != nil) {

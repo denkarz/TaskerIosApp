@@ -16,6 +16,7 @@ class TodoCell: UITableViewCell {
     var todo: Todo!
     var label = UITextView()
     var checkbox = M13Checkbox(frame: CGRect(x: 10, y: 0.0, width: 30.0, height: 30.0))
+    var defa = [NSAttributedString.Key.font : UIFont(name: "OpenSans", size: 15)]
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -44,22 +45,30 @@ class TodoCell: UITableViewCell {
     }
     override func layoutSubviews() {
         super.layoutSubviews()
-        label.text = todo!.text
+        let attributedString = NSMutableAttributedString(string: todo!.text)
+//        label.text = todo!.text
         if (todo?.is_completed == true) {
             checkbox.setCheckState(.checked, animated: true)
+            attributedString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, attributedString.length))
+            attributedString.addAttributes(defa, range:  NSMakeRange(0, attributedString.length))
+            label.attributedText = attributedString
         } else {
             checkbox.setCheckState(.unchecked, animated: true)
+            attributedString.addAttributes(defa, range:  NSMakeRange(0, attributedString.length))
+            label.attributedText = attributedString
         }
     }
     @objc func onChangeMe(paramTarget: M13Checkbox)  {
         var url = ""
-//        let attributedString = NSMutableAttributedString(string: label.text)
+        let attributedString = NSMutableAttributedString(string: self.label.text)
         if (checkbox.checkState == .checked) {
-//            attributedString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, attributedString.length))
-//            label.attributedText = attributedString
+            attributedString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, attributedString.length))
+            attributedString.addAttributes(defa, range:  NSMakeRange(0, attributedString.length))
+            label.attributedText = attributedString
             url = "https://limitless-dawn-57124.herokuapp.com/custom_controller/update?id=\(todo.id)&is_completed=true"
         } else {
-//            attributedString.removeAttribute(NSAttributedString.Key.strikethroughStyle, range: NSMakeRange(0, attributedString.length))
+            attributedString.addAttributes(defa, range:  NSMakeRange(0, attributedString.length))
+            label.attributedText = attributedString
             url = "https://limitless-dawn-57124.herokuapp.com/custom_controller/update?id=\(todo.id)&is_completed=false"
         }
         Alamofire.request(url)
