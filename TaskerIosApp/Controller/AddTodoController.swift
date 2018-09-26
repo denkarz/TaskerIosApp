@@ -34,7 +34,6 @@ class AddTodoListScreen: UIViewController {
         if (projectId != -1 || text != "") {
              Alamofire.request(url)
         }
-        print(url)
         self.dismiss(animated: true, completion: nil)
     }
 }
