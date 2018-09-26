@@ -15,6 +15,7 @@ class AddTodoListScreen: UIViewController {
     @IBOutlet weak var newTaskTableView: UITableView!
     var projects:[Project] = []
     var projectId = -1
+    var instanceOfMain: ProjectsListScreen!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +34,7 @@ class AddTodoListScreen: UIViewController {
         var url = "https://limitless-dawn-57124.herokuapp.com/custom_controller/create?project_id=\(projectId)&text=\(text)"
         if (projectId != -1 || text != "") {
              Alamofire.request(url)
+            instanceOfMain.fetch_data()
         }
         self.dismiss(animated: true, completion: nil)
     }
@@ -99,9 +101,5 @@ extension AddTodoListScreen : UITableViewDataSource, UITableViewDelegate {
             cell.accessoryType = .checkmark
             projectId = projects[indexPath.row].id
         }
-    }
-    
-    func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-
     }
 }

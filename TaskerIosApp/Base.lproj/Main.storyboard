@@ -52,7 +52,7 @@
                         <barButtonItem key="rightBarButtonItem" image="Add" id="XKD-oP-rh3">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
-                                <segue destination="F1I-VY-ErE" kind="modal" identifier="ADD_NEW" id="ZTB-uz-bH5"/>
+                                <segue destination="F1I-VY-ErE" kind="modal" id="ZTB-uz-bH5"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -149,6 +149,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="newTaskTableView" destination="4dS-0A-obT" id="GIk-U8-2kA"/>
+                        <segue destination="BYZ-38-t0r" kind="modal" identifier="GO_BACK" id="lUU-Rn-G4t"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y7H-DF-OM5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -209,4 +210,7 @@
         <image name="Back" width="30" height="20"/>
         <image name="Done" width="26" height="20"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="ax5-oH-3XL"/>
+    </inferredMetricsTieBreakers>
 </document>

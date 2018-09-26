@@ -16,18 +16,18 @@ class ProjectsListScreen: UIViewController {
     var projects:[Project] = []
     
     override func viewDidLoad() {
-        fetch_data()
-        print("viewDidLoad_start")
         super.viewDidLoad()
         self.navigationController!.navigationBar.tintColor = UIColor.white
         self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "OpenSans", size: 20)!,NSAttributedString.Key.foregroundColor:UIColor.white]
         self.tableView.backgroundColor = UIColor(red:0.97, green:0.97, blue:0.97, alpha:1.0)
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 200
-        print("viewDidLoad_end")
+    }
+    override func viewWillAppear(_ animated: Bool){
+        fetch_data()
     }
     
-    func fetch_data() -> Void {
+    public func fetch_data() -> Void {
         print("fetching_start")
         var tempProjects:[Project]=[]
         Alamofire.request("https://limitless-dawn-57124.herokuapp.com/custom_controller/index.json").responseJSON { (responseData) -> Void in
@@ -47,7 +47,6 @@ class ProjectsListScreen: UIViewController {
                         tmpProject.todos.append(tmpTodo)
                     }
                     tempProjects.append(tmpProject)
-                    print(tempProjects.count)
                     self.projects = tempProjects
                     if (self.projects.count == 3) {
                         self.tableView.reloadData()
@@ -96,5 +95,6 @@ extension ProjectsListScreen: UITableViewDataSource, UITableViewDelegate {
         let nav = segue.destination as! UINavigationController
         let svc = nav.topViewController as! AddTodoListScreen
         svc.projects = projects
+        svc.instanceOfMain = self
     }
 }
