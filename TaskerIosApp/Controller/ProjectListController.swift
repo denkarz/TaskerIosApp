@@ -16,23 +16,19 @@ class ProjectsListScreen: UIViewController {
     var projects:[Project] = []
     
     override func viewDidLoad() {
+        fetch_data()
+        print("viewDidLoad_start")
         super.viewDidLoad()
         self.navigationController!.navigationBar.tintColor = UIColor.white
         self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "OpenSans", size: 20)!,NSAttributedString.Key.foregroundColor:UIColor.white]
-//        ["OpenSans-Semibold", "OpenSans"]
-//        for family in UIFont.familyNames.sorted(){
-//            let names = UIFont.fontNames(forFamilyName:family)
-//            print("Family: \(family) Font names: \(names)")
-//        }
         self.tableView.backgroundColor = UIColor(red:0.97, green:0.97, blue:0.97, alpha:1.0)
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 200
-        projects = createArray()
-//        fetch_data()
+        print("viewDidLoad_end")
     }
     
     func fetch_data() -> Void {
-        print("fetch")
+        print("fetching_start")
         var tempProjects:[Project]=[]
         Alamofire.request("https://limitless-dawn-57124.herokuapp.com/custom_controller/index.json").responseJSON { (responseData) -> Void in
             if((responseData.result.value) != nil) {
@@ -47,54 +43,18 @@ class ProjectsListScreen: UIViewController {
                         let tmpTodo = Todo()
                         tmpTodo.id = jtodos[j]["id"].intValue
                         tmpTodo.text = jtodos[j]["text"].stringValue
-                        tmpTodo.is_completed = jtodos["is_completed"].boolValue
+                        tmpTodo.is_completed = jtodos[j]["is_completed"].boolValue
                         tmpProject.todos.append(tmpTodo)
                     }
                     tempProjects.append(tmpProject)
+                    print(tempProjects.count)
+                    self.projects = tempProjects
+                    if (self.projects.count == 3) {
+                        self.tableView.reloadData()
+                    }
                 }
             }
         }
-        projects = tempProjects
-        tableView.reloadData()
-    }
-    
-    func createArray() -> [Project] {
-        var tempProjects:[Project]=[]
-        var tempTodos1:[Todo]=[]
-        var tempTodos2:[Todo]=[]
-        var tempTodos3:[Todo]=[]
-        
-        var todo = Todo(id: 1, text: "Купить молоко", is_completed: false)
-        tempTodos1.append(todo)
-        todo = Todo(id: 2, text: "Заменить масло в двигателе до 23 апреля", is_completed: false)
-        tempTodos1.append(todo)
-        todo = Todo(id: 3, text: "Отправить письмо бабушке", is_completed: true)
-        tempTodos1.append(todo)
-        todo = Todo(id: 4, text: "Заплатить за квартиру", is_completed: false)
-        tempTodos1.append(todo)
-        todo = Todo(id: 5, text: "Забрать обувь из ремонта", is_completed: false)
-        tempTodos1.append(todo)
-        
-        var project = Project(id:1,title: "Семья",todos: tempTodos1)
-        tempProjects.append(project)
-        
-        todo = Todo(id: 6, text: "Позвонить заказчику", is_completed: true)
-        tempTodos2.append(todo)
-        todo = Todo(id: 7, text: "Отправить документы", is_completed: true)
-        tempTodos2.append(todo)
-        todo = Todo(id: 8, text: "Заполнить отчет", is_completed: false)
-        tempTodos2.append(todo)
-        project = Project(id:2,title: "Работа",todos: tempTodos2)
-        tempProjects.append(project)
-        
-        todo = Todo(id: 9, text: "Позвонит другу", is_completed: false)
-        tempTodos3.append(todo)
-        todo = Todo(id: 10, text: "Подготовиться к поездке", is_completed: false)
-        tempTodos3.append(todo)
-        project = Project(id:3,title: "Прочее",todos: tempTodos3)
-        tempProjects.append(project)
-        
-        return tempProjects
     }
 }
 
