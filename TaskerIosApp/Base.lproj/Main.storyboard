@@ -52,7 +52,7 @@
                         <barButtonItem key="rightBarButtonItem" image="Add" id="XKD-oP-rh3">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
-                                <segue destination="F1I-VY-ErE" kind="modal" id="ZTB-uz-bH5"/>
+                                <segue destination="F1I-VY-ErE" kind="modal" identifier="ADD_NEW" id="ZTB-uz-bH5"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

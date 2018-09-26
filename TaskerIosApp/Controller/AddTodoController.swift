@@ -10,17 +10,15 @@ import Foundation
 import UIKit
 
 class AddTodoListScreen: UIViewController {
+    
     @IBOutlet weak var newTaskTableView: UITableView!
-    var categories:[String] = []
+    var projects:[Project] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController!.navigationBar.tintColor = UIColor.white
         self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "OpenSans", size: 20)!,NSAttributedString.Key.foregroundColor:UIColor.white]
         self.newTaskTableView.backgroundColor = UIColor(red:0.97, green:0.97, blue:0.97, alpha:1.0)
-        categories.append("TITLE1")
-        categories.append("TITLE2")
-        categories.append("TITLE3")
     }
     
     @IBAction func goBack(_ sender: Any) {
@@ -39,7 +37,7 @@ extension AddTodoListScreen : UITableViewDataSource, UITableViewDelegate {
         if section == 0 {
             return 1
         } else {
-            return categories.count
+            return projects.count
         }
     }
     
@@ -69,7 +67,7 @@ extension AddTodoListScreen : UITableViewDataSource, UITableViewDelegate {
         } else {
             let cell = newTaskTableView.dequeueReusableCell(withIdentifier: "category") as! UITableViewCell
             cell.textLabel?.font = UIFont(name: "OpenSans", size: 15)
-            cell.textLabel?.text = categories[indexPath.row]
+            cell.textLabel?.text = projects[indexPath.row].title
             cell.selectionStyle = .none
             return cell
         }

@@ -127,4 +127,9 @@ extension ProjectsListScreen: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 44
     }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let nav = segue.destination as! UINavigationController
+        let svc = nav.topViewController as! AddTodoListScreen
+        svc.projects = projects
+    }
 }
