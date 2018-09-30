@@ -46,31 +46,30 @@ class TodoCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         let attributedString = NSMutableAttributedString(string: todo!.text)
-//        label.text = todo!.text
         if (todo?.is_completed == true) {
             checkbox.setCheckState(.checked, animated: true)
             attributedString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, attributedString.length))
-            attributedString.addAttributes(defa, range:  NSMakeRange(0, attributedString.length))
+            attributedString.addAttributes(defa as [NSAttributedString.Key : Any], range:  NSMakeRange(0, attributedString.length))
             label.attributedText = attributedString
         } else {
             checkbox.setCheckState(.unchecked, animated: true)
-            attributedString.addAttributes(defa, range:  NSMakeRange(0, attributedString.length))
+            attributedString.addAttributes(defa as [NSAttributedString.Key : Any], range:  NSMakeRange(0, attributedString.length))
             label.attributedText = attributedString
         }
     }
     @objc func onChangeMe(paramTarget: M13Checkbox)  {
-        var url = ""
+//        let url = "http://192.168.1.68:3000/custom_controller/update"
+        let url = "https://limitless-dawn-57124.herokuapp.com/custom_controller/update"
         let attributedString = NSMutableAttributedString(string: self.label.text)
         if (checkbox.checkState == .checked) {
             attributedString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, attributedString.length))
-            attributedString.addAttributes(defa, range:  NSMakeRange(0, attributedString.length))
+            attributedString.addAttributes(defa as [NSAttributedString.Key : Any], range:  NSMakeRange(0, attributedString.length))
             label.attributedText = attributedString
-            url = "https://limitless-dawn-57124.herokuapp.com/custom_controller/update?id=\(todo.id)&is_completed=true"
         } else {
-            attributedString.addAttributes(defa, range:  NSMakeRange(0, attributedString.length))
+            attributedString.addAttributes(defa as [NSAttributedString.Key : Any], range:  NSMakeRange(0, attributedString.length))
             label.attributedText = attributedString
-            url = "https://limitless-dawn-57124.herokuapp.com/custom_controller/update?id=\(todo.id)&is_completed=false"
         }
-        Alamofire.request(url)
+        let parameters: Parameters = ["todo": ["id": todo.id]]
+        Alamofire.request(url, method: .put, parameters: parameters)
     }
 }

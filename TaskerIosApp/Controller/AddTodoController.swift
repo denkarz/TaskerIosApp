@@ -31,9 +31,11 @@ class AddTodoListScreen: UIViewController {
     @IBAction func done(_ sender: Any) {
         let cell: TodoTextCell = self.newTaskTableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! TodoTextCell
         let text = cell.textField.text!
-        var url = "https://limitless-dawn-57124.herokuapp.com/custom_controller/create?project_id=\(projectId)&text=\(text)"
+//        let url = "http://192.168.1.68:3000/custom_controller/create"
+        let url = "https://limitless-dawn-57124.herokuapp.com/custom_controller/create"
         if (projectId != -1 || text != "") {
-             Alamofire.request(url)
+            let parameters: Parameters = ["todo": ["text": text, "project_id":projectId]]
+             Alamofire.request(url, method: .post, parameters: parameters)
             instanceOfMain.fetch_data()
         }
         self.dismiss(animated: true, completion: nil)

@@ -31,7 +31,9 @@ class ProjectsListScreen: UIViewController {
     
     public func fetch_data() -> Void {
         var tempProjects:[Project]=[]
-        Alamofire.request("https://limitless-dawn-57124.herokuapp.com/custom_controller/index.json").responseJSON { (responseData) -> Void in
+//        let url = "http://192.168.1.68:3000/custom_controller/index.json"
+        let url = "https://limitless-dawn-57124.herokuapp.com/custom_controller/index.json"
+        Alamofire.request(url).responseJSON { (responseData) -> Void in
             if((responseData.result.value) != nil) {
                 let json = JSON(responseData.result.value!)
                 for i in 0 ..< json.count {
